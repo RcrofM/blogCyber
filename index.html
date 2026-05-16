@@ -21,7 +21,6 @@
       overflow-x: hidden;
     }
 
-    /* Fundo animado estilo X */
     #bg-canvas {
       position: fixed;
       top: 0; left: 0;
@@ -41,14 +40,14 @@
   <canvas id="bg-canvas"></canvas>
 
   <!-- Header -->
-  <header class="header border-b border-gray-800 py-10 relative z-10">
+  <header class="header py-10 relative z-10">
     <div class="max-w-4xl mx-auto px-6 flex items-center justify-center gap-4">
       <span class="text-5xl">λ</span>
       <h1 class="text-5xl font-medium tracking-tighter">HEAP BR</h1>
     </div>
   </header>
 
-  <!-- Abas -->
+  <!-- Abas (sem linha bugada) -->
   <nav class="max-w-4xl mx-auto px-6 border-b border-gray-800 relative z-10">
     <div class="flex gap-8 text-sm overflow-x-auto pb-4">
       <a onclick="showTab('all')" id="tab-all" class="tab-link cursor-pointer border-b-2 border-blue-400 pb-1 text-blue-400">TODOS</a>
