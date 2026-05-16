@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LowLevel Vault</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+    
+    body {
+      background: #0a0a0a;
+      color: #e5e5e5;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    
+    .header-bg {
+      background: linear-gradient(180deg, #111111, #0a0a0a);
+    }
+    
+    .post-card {
+      transition: all 0.4s ease;
+    }
+    .post-card:hover {
+      transform: translateY(-4px);
+      border-color: #3b82f6;
+    }
+    
+    .tag {
+      transition: all 0.3s ease;
+    }
+    .tag:hover {
+      background-color: #3b82f6 !important;
+      color: white !important;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body class="min-h-screen">
+
+  <!-- Header inspirado no templo7k -->
+  <header class="header-bg border-b border-gray-800 py-12">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      <h1 class="text-5xl font-medium tracking-tighter mb-2">LOWLEVEL VAULT</h1>
+      <p class="text-gray-400 text-sm tracking-widest">PROGRAMAÇÃO DE BAIXO NÍVEL • REVERSE ENGINEERING • EXPLOITS</p>
+    </div>
+  </header>
+
+  <!-- Abas -->
+  <nav class="max-w-4xl mx-auto px-6 border-b border-gray-800">
+    <div class="flex gap-8 text-sm overflow-x-auto pb-4">
+      <a onclick="showTab('all')" id="tab-all" class="tab-link cursor-pointer border-b-2 border-blue-400 pb-1 text-blue-400">TODOS</a>
+      <a onclick="showTab('lowlevel')" id="tab-lowlevel" class="tab-link cursor-pointer hover:text-gray-300">LOW-LEVEL</a>
+      <a onclick="showTab('reverse')" id="tab-reverse" class="tab-link cursor-pointer hover:text-gray-300">REVERSE ENGINEERING</a>
+      <a onclick="showTab('exploits')" id="tab-exploits" class="tab-link cursor-pointer hover:text-gray-300">EXPLOITS & SHELLCODE</a>
+      <a onclick="showTab('kernel')" id="tab-kernel" class="tab-link cursor-pointer hover:text-gray-300">KERNEL & DRIVERS</a>
+    </div>
+  </nav>
+
+  <main class="max-w-4xl mx-auto px-6 py-10">
+    <div id="posts-container" class="space-y-8">
+      <!-- Posts aparecem aqui -->
+    </div>
+  </main>
+
+  <!-- Footer com links -->
+  <footer class="border-t border-gray-800 py-8 mt-16">
+    <div class="max-w-4xl mx-auto px-6 flex justify-between items-center text-gray-400 text-sm">
+      <p>© Gabriel Wired • 2026</p>
+      <div class="flex gap-6 text-2xl">
+        <a href="https://t.me/seucanal" target="_blank" class="hover:text-blue-400"><i class="fa-brands fa-telegram"></i></a>
+        <a href="https://x.com/lainsec" target="_blank" class="hover:text-blue-400"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="https://github.com/lainsec" target="_blank" class="hover:text-blue-400"><i class="fa-brands fa-github"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const posts = [
+      {
+        title: "Bypassando ASLR + PIE com ROP chains em 2026",
+        date: "16 MAI 2026",
+        excerpt: "Técnica atual que continua funcionando em binários modernos com todas as mitigações ativadas.",
+        tags: ["ROP", "ASLR", "PIE", "x86-64"],
+        category: "exploits"
+      },
+      {
+        title: "Encontrando a main em binários stripped sem símbolos",
+        date: "14 MAI 2026",
+        excerpt: "Método prático usando apenas strings + objdump.",
+        tags: ["Reverse Engineering", "GDB", "Binário"],
+        category: "reverse"
+      },
+      {
+        title: "Shellcoding Linux x86-64 — do zero até execução",
+        date: "12 MAI 2026",
+        excerpt: "Primeira parte da série focada em assembly puro.",
+        tags: ["Shellcode", "Assembly", "Low-Level"],
+        category: "lowlevel"
+      }
+      // Adicione quantos quiser aqui
+    ];
+
+    function renderPosts(filtered) {
+      const container = document.getElementById('posts-container');
+      container.innerHTML = '';
+
+      filtered.forEach(post => {
+        const card = document.createElement('div');
+        card.className = 'post-card border border-gray-700 rounded-xl p-6 hover:border-blue-500 bg-[#111111]';
+        card.innerHTML = `
+          <div class="flex justify-between text-xs text-gray-400 mb-3">
+            <span>${post.date}</span>
+          </div>
+          <h3 class="text-xl font-medium mb-4">${post.title}</h3>
+          <p class="text-gray-400 text-sm mb-6">${post.excerpt}</p>
+          <div class="flex flex-wrap gap-2">
+            ${post.tags.map(tag => `<span class="tag text-xs px-5 py-1 bg-gray-800 rounded-full">${tag}</span>`).join('')}
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function showTab(cat) {
+      document.querySelectorAll('.tab-link').forEach(t => t.classList.remove('border-b-2', 'border-blue-400', 'text-blue-400'));
+      document.getElementById('tab-' + cat).classList.add('border-b-2', 'border-blue-400', 'text-blue-400');
+
+      if (cat === 'all') renderPosts(posts);
+      else renderPosts(posts.filter(p => p.category === cat));
+    }
+
+    // Inicializa
+    renderPosts(posts);
+  </script>
+</body>
+</html>
